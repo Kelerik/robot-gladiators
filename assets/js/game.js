@@ -1,4 +1,13 @@
-// fight function (now with parameter for enemy's name)
+/* GAME FUNCTIONS */
+
+// function to generate a random numeric value
+var randomNumber = function (min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+
+    return value;
+};
+
+// fight function (now with parameter for enemy's object holding name, health, and attack values)
 var fight = function (enemy) {
     while (playerInfo.health > 0 && enemy.health > 0) {
         // ask player if they'd like to fight or run
@@ -28,6 +37,7 @@ var fight = function (enemy) {
 
         // generate random damage value based on player's attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
+
         enemy.health = Math.max(0, enemy.health - damage);
         console.log(
             playerInfo.name +
@@ -57,7 +67,9 @@ var fight = function (enemy) {
 
         // remove players's health by subtracting the amount set in the enemy.attack variable
         var damage = randomNumber(enemy.attack - 3, enemy.attack);
+
         playerInfo.health = Math.max(0, playerInfo.health - damage);
+
         console.log(
             enemy.name +
                 " attacked " +
@@ -92,18 +104,18 @@ var startGame = function () {
 
     // fight each enemy robot by looping over them and fighting them one at a time
     for (var i = 0; i < enemyInfo.length; i++) {
-        // if player is still alive, keep fighting
+        // if player is still alive, keep fight next enemy
         if (playerInfo.health > 0) {
             // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
 
-            // pick new enemy to fight based on the index of the enemyNames array
+            // pick new enemy to fight based on the index of the enemyInfo array
             var pickedEnemyObj = enemyInfo[i];
 
-            // reset enemyHealth before starting new fight
+            // set health for picked enemy
             pickedEnemyObj.health = randomNumber(40, 60);
 
-            // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
+            // pass the pickedEnemyObj object variable's value into the fight function, where it will assume the value of the enemy parameter
             fight(pickedEnemyObj);
 
             // if player is still alive and we're not at the last enemy in the array
@@ -126,7 +138,7 @@ var startGame = function () {
         }
     }
 
-    // after loop ends, we are either out of playerInfo.health or enemies to fight, so run the endGame function
+    // after loop ends, we are either out of player.health or enemies to fight, so run the endGame function
     endGame();
 };
 
@@ -186,11 +198,12 @@ var shop = function () {
             break;
     }
 };
-// function to generate a random numeric value
-var randomNumber = function (min, max) {
-    var value = Math.floor(Math.random() * (max - min + 1) + min);
-    return value;
-};
+
+/* END GAME FUNCTIONS */
+
+/* GAME INFORMATION / VARIABLES */
+
+// player information
 var playerInfo = {
     name: window.prompt("What is your robot's name?"),
     health: 100,
@@ -220,7 +233,8 @@ var playerInfo = {
         }
     },
 };
-var enemyHealth = 50;
+
+// enemy information
 var enemyInfo = [
     {
         name: "Roborto",
@@ -231,9 +245,17 @@ var enemyInfo = [
         attack: randomNumber(10, 14),
     },
     {
-        name: "Robot Trumble",
+        name: "Robo Trumble",
         attack: randomNumber(10, 14),
     },
 ];
-// start first game when page loads
+
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]["attack"]);
+
+/* END GAME INFORMATION / VARIABLES */
+
+/* RUN GAME */
 startGame();
