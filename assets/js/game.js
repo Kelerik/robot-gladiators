@@ -180,6 +180,26 @@ var endGame = function () {
         startGame();
     } else {
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+
+        var savedHighscore = window.localStorage.getItem("highscore");
+        if (playerInfo.money > savedHighscore || !savedHighscore) {
+            window.alert(
+                "Your old highscore was " +
+                    savedHighscore +
+                    ". Congratulations! You have a new high score of " +
+                    playerInfo.money +
+                    "!"
+            );
+            window.localStorage.setItem("highscore", playerInfo.money);
+        } else {
+            window.alert(
+                "Your score is " +
+                    playerInfo.money +
+                    ". You did not beat your highscore of " +
+                    savedHighscore +
+                    ". Try again."
+            );
+        }
     }
 };
 
